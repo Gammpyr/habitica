@@ -1,13 +1,11 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from habitica.models import Habit
 from habitica.pagination import HabitPagination
 from habitica.permissions import IsOwner
 from habitica.serializers import HabitSerializer
-
-
 
 
 class HabitViewSet(viewsets.ModelViewSet):
@@ -29,7 +27,6 @@ class HabitViewSet(viewsets.ModelViewSet):
         else:
             return Habit.objects.filter(is_public=True)
 
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -43,4 +40,3 @@ class HabitViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
