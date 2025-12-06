@@ -11,8 +11,12 @@ class Habit(models.Model):
     PERIODICITY = (
         ("", "не выбрано"),
         ("day", "ежедневная"),
+        ("two_days", "каждые два дня"),
+        ("three_days", "каждые три дня"),
+        ("four_days", "каждые четыре дня"),
+        ("five_days", "каждые пять дней"),
+        ("six_days", "каждые шесть дней"),
         ("week", "еженедельная"),
-        ("month", "ежемесячная"),
     )
 
     user = models.ForeignKey(
