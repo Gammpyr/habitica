@@ -11,6 +11,8 @@ class CustomUser(AbstractUser):
 
     USERNAME_FIELD = "username"
     # REQUIRED_FIELDS = ['username']
+    fields = ['id', 'username', 'email', 'telegram_chat_id', 'date_joined']
+    exclude = ['password', 'is_superuser', 'is_staff', 'user_permissions', 'groups']
 
     class Meta:
         verbose_name = "Пользователь"
