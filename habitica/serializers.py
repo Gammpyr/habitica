@@ -42,11 +42,5 @@ class HabitSerializer(serializers.ModelSerializer):
         periodicity = data.get(
             "periodicity", self.instance.periodicity if self.instance else "day"
         )
-        if not is_good and periodicity == "month":
-            raise serializers.ValidationError(
-                {
-                    "periodicity": "Полезная привычка не может выполняться реже, чем 1 раз в 7 дней."
-                }
-            )
 
         return data
