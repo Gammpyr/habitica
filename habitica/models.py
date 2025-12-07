@@ -51,7 +51,7 @@ class Habit(models.Model):
     is_public = models.BooleanField(default=False, verbose_name="Признак публичности")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     last_notified = models.DateTimeField(
-        null=True, blank=True, verbose_name="Последнее уведомление"
+        auto_now_add=True, null=True, blank=True, verbose_name="Последнее уведомление"
     )
     last_completed = models.DateTimeField(
         null=True, blank=True, verbose_name="Последнее выполнение"
