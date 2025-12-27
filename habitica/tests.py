@@ -45,8 +45,8 @@ class HabitAPITestCase(APITestCase):
         self.assertEqual(response.status_code, HTTP_200_OK)
 
         results = response.json()["results"]
-        habit1 = results[0]
-        habit2 = results[1]
+        habit1 = results[1]
+        habit2 = results[0]
 
         self.assertEqual(habit1["place"], "test_place1")
         self.assertEqual(habit1["time"], "01:00:00")
