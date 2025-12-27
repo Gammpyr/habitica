@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.utils import timezone
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -21,7 +21,7 @@ class HabitViewSet(viewsets.ModelViewSet):
         user = self.request.user
 
         if user.is_authenticated:
-            if self.action in ['update', 'partial_update', 'destroy', 'complete']:
+            if self.action in ["update", "partial_update", "destroy", "complete"]:
                 return Habit.objects.filter(user=user)
             return Habit.objects.filter(Q(user=user) | Q(is_public=True))
 
@@ -42,15 +42,11 @@ class HabitViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=["post"])
     def complete(self, request, pk=None):
         habit = self.get_object()
         if habit.user != request.user:
-            return Response(
-                {'error': 'Вы не можете выполнять чужую привычку'},
-                status=status.HTTP_403_FORBIDDEN
-            )
+            return Response({"error": "Вы не можете выполнять чужую привычку"}, status=status.HTTP_403_FORBIDDEN)
         habit.last_completed = timezone.now()
         habit.save()
-        return Response({'status': 'habit completed'})
-
+        return Response({"status": "habit completed"})

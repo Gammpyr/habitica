@@ -21,4 +21,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'telegram_chat_id', 'date_joined']
+        fields = ["id", "username", "email", "telegram_chat_id", "date_joined"]
