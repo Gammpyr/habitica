@@ -40,7 +40,6 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_USER: postgres
           POSTGRES_DB: test_db
-          ALLOWED_HOSTS: 'localhost,127.0.0.1'
 
     steps:
       - name: Checkout code
