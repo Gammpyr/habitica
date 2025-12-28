@@ -33,13 +33,23 @@ jobs:
 
     services:
       db:
-        image: postgres:16-alpine
-        ports:
-          - 5432:5432
+        image: postgres:16
         env:
           POSTGRES_PASSWORD: password
           POSTGRES_USER: postgres
-          POSTGRES_DB: test_db
+          POSTGRES_DB: habitica
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
 
     steps:
       - name: Checkout code
