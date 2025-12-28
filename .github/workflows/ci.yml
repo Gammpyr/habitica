@@ -110,10 +110,10 @@ jobs:
         - name: Deploy to Server
           run: |
             ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-              docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/habitica:${{ github.sha }}
+              docker pull ${{ secrets.DOCKERHUB_USERNAME }}/habitica:${{ github.sha }}
               docker stop habitica || true
               docker rm habitica || true
-              docker run -d --name habitica -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/habitica:${{ github.sha }}
+              docker run -d --name habitica -p 80:8000 ${{ secrets.DOCKERHUB_USERNAME }}/habitica:${{ github.sha }}
             EOF
           
 
