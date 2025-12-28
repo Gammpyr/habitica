@@ -25,7 +25,7 @@ jobs:
             pip install flake8
 
         - name: Lint code
-          run: flake8 . --exclude=migrations,venv,env,.venv,.git, __pycache__
+          run: flake8 . --exclude=migrations,venv,env,.venv
 
 
 
