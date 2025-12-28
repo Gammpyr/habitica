@@ -2,9 +2,8 @@ name: Test
 
 on:
   workflow_run:
-    workflow: Lint
-    types:
-      - completed
+    workflows: [Lint (flake8)]
+    types: [completed]
 
 jobs:
   test:
