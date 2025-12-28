@@ -2,7 +2,7 @@ name: Test
 
 on:
   workflow_run:
-    workflows: [Lint (flake8)]
+    workflows: [lint]
     types: [completed]
 
 jobs:
