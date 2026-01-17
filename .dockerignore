@@ -1,0 +1,7 @@
+**
+!config
+!habitica
+!users
+!poetry.lock
+!pyproject.toml
+!manage.py

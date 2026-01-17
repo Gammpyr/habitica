@@ -21,5 +21,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'telegram_chat_id', 'date_joined']
-        exclude = ['password', 'is_superuser', 'is_staff', 'user_permissions', 'groups']
+        fields = ["id", "username", "email", "telegram_chat_id", "date_joined"]

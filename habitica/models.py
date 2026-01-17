@@ -28,9 +28,7 @@ class Habit(models.Model):
     place = models.CharField(max_length=255, verbose_name="Место")
     time = models.TimeField(verbose_name="Время выполнения")
     action = models.CharField(max_length=255, verbose_name="Действие")
-    is_good = models.BooleanField(
-        default=False, verbose_name="Признак приятной привычки"
-    )
+    is_good = models.BooleanField(default=False, verbose_name="Признак приятной привычки")
     related_habit = models.ForeignKey(
         "self",
         on_delete=models.SET_NULL,
@@ -39,23 +37,15 @@ class Habit(models.Model):
         related_name="related_habits",
         verbose_name="Связанная привычка",
     )
-    periodicity = models.CharField(
-        choices=PERIODICITY, default="day", max_length=255, verbose_name="Периодичность"
-    )
-    reward = models.CharField(
-        max_length=255, null=True, blank=True, verbose_name="Вознаграждение "
-    )
-    time_to_do = models.PositiveIntegerField(
-        verbose_name="Время на выполнение (в секундах)"
-    )
+    periodicity = models.CharField(choices=PERIODICITY, default="day", max_length=255, verbose_name="Периодичность")
+    reward = models.CharField(max_length=255, null=True, blank=True, verbose_name="Вознаграждение ")
+    time_to_do = models.PositiveIntegerField(verbose_name="Время на выполнение (в секундах)")
     is_public = models.BooleanField(default=False, verbose_name="Признак публичности")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     last_notified = models.DateTimeField(
         auto_now_add=True, null=True, blank=True, verbose_name="Последнее уведомление"
     )
-    last_completed = models.DateTimeField(
-        null=True, blank=True, verbose_name="Последнее выполнение"
-    )
+    last_completed = models.DateTimeField(null=True, blank=True, verbose_name="Последнее выполнение")
 
     class Meta:
         verbose_name = "Привычка"
