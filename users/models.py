@@ -5,9 +5,7 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    telegram_chat_id = models.CharField(
-        max_length=100, blank=True, null=True, verbose_name="ID чата в Telegram"
-    )
+    telegram_chat_id = models.CharField(max_length=100, blank=True, null=True, verbose_name="ID чата в Telegram")
 
     USERNAME_FIELD = "username"
     # REQUIRED_FIELDS = ['username']

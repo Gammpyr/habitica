@@ -21,9 +21,7 @@ def check_and_send_habit_reminders():
     now_local = timezone.localtime()
     now = now_local.time()
 
-    habits = Habit.objects.filter(
-        time__hour=now.hour, time__minute=now.minute
-    ).select_related("user")
+    habits = Habit.objects.filter(time__hour=now.hour, time__minute=now.minute).select_related("user")
 
     for habit in habits:
         if habit.user.telegram_chat_id:
@@ -54,9 +52,7 @@ def check_and_send_habit_reminders():
                 if days_since_last < required_interval:
                     continue
 
-            send_telegram_notification.delay(
-                chat_id=habit.user.telegram_chat_id, message=message
-            )
+            send_telegram_notification.delay(chat_id=habit.user.telegram_chat_id, message=message)
             habit.last_notified = timezone.now()
             habit.save()
             print(f"Напоминание отправлено для привычки: {habit.action}")

@@ -14,9 +14,7 @@ from users.models import CustomUser
 class HabitAPITestCase(APITestCase):
 
     def setUp(self):
-        self.user1 = CustomUser.objects.create_user(
-            username="test1", email="test1@test.ru", password="test1"
-        )
+        self.user1 = CustomUser.objects.create_user(username="test1", email="test1@test.ru", password="test1")
 
         self.habit1 = Habit.objects.create(
             user=self.user1,
