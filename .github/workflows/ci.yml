@@ -110,11 +110,45 @@ jobs:
         - name: Deploy to Server
           run: |
             ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-              docker pull ${{ secrets.DOCKERHUB_USERNAME }}/habitica:${{ github.sha }}
-              docker stop habitica || true
-              docker rm habitica || true
-              docker run -d --name habitica -p 80:8000 ${{ secrets.DOCKERHUB_USERNAME }}/habitica:${{ github.sha }}
+              set -e
+ 
+              IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/habitica:${{ github.sha }}"
+              PROJECT_DIR="$HOME/habitica"
+ 
+              # Создаем/обновляем директорию проекта
+              mkdir -p "$PROJECT_DIR"
+              cd "$PROJECT_DIR"
+ 
+              # Клонируем или обновляем репозиторий (нужен docker-compose.yml и nginx.conf)
+              if [ -d .git ]; then
+                git fetch && git checkout ${{ github.ref_name }} && git pull
+              else
+                git clone -b ${{ github.ref_name }} https://github.com/${{ github.repository }}.git .
+              fi
+ 
+              # Скачиваем новый образ
+              docker pull "$IMAGE_NAME"
+ 
+              # Останавливаем старые контейнеры
+              docker-compose down || true
+ 
+              # Создаем override файл для использования готового образа
+              cat > docker-compose.override.yml << EOV
+              services:
+                backend:
+                  image: $IMAGE_NAME
+                celery:
+                  image: $IMAGE_NAME
+                celery-beat:
+                  image: $IMAGE_NAME
+              EOV
+ 
+              # Запускаем через docker-compose (автоматически использует override файл)
+              docker-compose up -d
+ 
+              # Удаляем override файл
+              rm -f docker-compose.override.yml
+ 
+              # Очищаем старые неиспользуемые образы
+              docker image prune -f
             EOF
-          
-
-
